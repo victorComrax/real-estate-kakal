@@ -1,0 +1,96 @@
+<div class="property-control" let property='property'>
+    <!-- First Line -->
+    <div class="content">
+        <div class="content_1">
+            <h1>גוש {{property.block}}</h1>
+            <svg-icon class="list-icon" src="assets/images/Ellipse.svg"></svg-icon>
+            <span>חלקה {{property.lot}}</span>
+            <svg-icon class="list-icon" src="assets/images/Ellipse.svg"></svg-icon>
+            <span>שטח :
+                {{property.area}} מ"ר</span>
+        </div>
+        <div class="content_2">
+            <button class="button-svg">
+                <svg-icon class="list-icon" src="assets/images/save.svg"></svg-icon>
+            </button>
+            <button class="button-svg">
+                <svg-icon class="list-icon" src="assets/images/print.svg"></svg-icon>
+            </button>
+            <button class="button-text">
+                שמירה
+            </button>
+        </div>
+    </div>
+    <!-- End Of First Line -->
+    <!-- Second Line -->
+    <div class="content-2">
+        <div class="content_1">
+            <svg-icon src='assets/images/calendar.svg'></svg-icon>
+            <span>נחתם בתאריך {{property.date}}</span>
+        </div>
+        <div class="content_1">
+            <svg-icon src='assets/images/location.svg'></svg-icon>
+            <span>{{property.location}}</span>
+        </div>
+    </div>
+    <!-- End Of Second Line -->
+    <!-- Stepper -->
+
+    <app-working-steps [steps]='stepsArray' [activeStep]='activeStep' (changeActiveStep)='changeActiveStep($event)'>
+    </app-working-steps>
+
+    <div class="report-content">
+        <span (click)='test()'>דיווח לרשות המיסים <a>שלח מייל</a></span>
+    </div>
+    <app-not-working-tabs></app-not-working-tabs>
+    <!-- Forms -->
+    <div class="tables">
+        <div class="table_2">
+            <div id="border_bottom">
+                <p>ארועים חריגים</p>
+            </div>
+            <ng-container *ngFor='let event of exceptionalEvents;let last = last;'>
+                <div class="exceptionalEvents">
+                    <span>{{event.date}}</span>
+                    <span>{{event.reason}}</span>
+                    <span>{{event.location}}</span>
+                </div>
+                <hr class="border" *ngIf='!last'>
+            </ng-container>
+
+        </div>
+        <div class="table_1">
+            <div id="border_bottom">
+                <p>זכויות</p>
+            </div>
+            <div class="edit-page">
+                <app-form-container [questions]='form_one_array' [cols]='5'></app-form-container>
+                <app-form-container [questions]='form_two_array' [cols]='4'></app-form-container>
+                <app-form-container [questions]='form_three_array' [cols]='4'></app-form-container>
+            </div>
+        </div>
+    </div>
+    <!--End of forms -->
+    <div class="destiny">
+        <span>ייעוד</span>
+        <svg-icon src='assets/images/down-arrow.svg'></svg-icon>
+    </div>
+    <div class="more_info">
+        <div (click)='this.moreInfoIsOpen ? this.moreInfoIsOpen = false : this.moreInfoIsOpen = true'>
+            <svg-icon src='assets/images/down-arrow.svg'></svg-icon>
+            <span>מידע נוסף</span>
+        </div>
+        <div class="more_info_forms" *ngIf='moreInfoIsOpen'>
+            <div class="edit-page">
+                <app-form-container [questions]='form_four_array' [cols]='6'></app-form-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="last_button">
+        <button class="button-text">
+            שמירה
+        </button>
+    </div>
+
+</div>

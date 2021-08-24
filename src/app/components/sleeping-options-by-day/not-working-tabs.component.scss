@@ -1,0 +1,63 @@
+.SOBD {
+  padding: 20px;
+  margin: 10px;
+  box-sizing: border-box;
+  direction: rtl;
+  &__days {
+  margin: 0 auto;
+  margin-bottom: 30px;
+    text-align: center;
+    width: 35%;
+    &-current-day {
+      &-next {
+        margin-right: 5px;
+      }
+      &-previous {
+        margin-left: 5px;
+      }
+      &-previous,
+      &-next {
+        cursor: pointer;
+        color: #448ecd;
+        font-weight: bold;
+        transform: scale(1.3);
+        background-color: transparent;
+        border: 0;
+        padding-bottom: 3px;
+        box-sizing: border-box;
+      }
+
+      font-size: 18px;
+      &-text {
+        & span {
+          color: #37c56b;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  &__days-paginatior {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 80%;
+    margin:0 auto;
+    & span {
+      border-top: 5px solid #dbdbdb;
+      flex: 1;
+      margin: 5px;
+    }
+  }
+
+}
+
+.chosen {
+  border-top: 5px solid #ff6f2e !important;
+  background-color: transparent !important;
+}
+
+
+.SOBD__days{
+  display: flex;
+}
