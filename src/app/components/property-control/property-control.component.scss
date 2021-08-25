@@ -85,15 +85,16 @@ svg .a {
     justify-content: space-around;
 }
 
-.table_1 p,
-.table_2 p {
+.table_1 #title,
+.table_2 #title {
     border-bottom: 1px solid #fd7a22;
     margin: 0;
     display: inline-block;
     font-weight: 600;
 }
-.table_2 #border_bottom ,.table_1 #border_bottom {
-    border-bottom: 2px solid #fd7a22;
+.table_2 #border_bottom,
+.table_1 #border_bottom {
+    border-bottom: 1px solid #fd7a22;
     margin: 10px;
 }
 .exceptionalEvents {
@@ -108,11 +109,20 @@ svg .a {
     border-bottom: 1px solid #707070;
     opacity: 0.23;
 }
-
+.rights table td {
+    padding: 20px;
+    direction: rtl;
+}
+.rights table > tr > td:last-of-type {
+    padding: 0;
+    width: 10px;
+}
+.rights table {
+    width: 100%;
+}
 .destiny {
     padding: 10px;
     margin-right: 20px;
-    display: flex;
     direction: rtl;
     background: #fbfbfb 0% 0% no-repeat padding-box;
     span {
@@ -124,6 +134,38 @@ svg .a {
             fill: #e0ba75;
         }
     }
+}
+.destiny-content > table > tr > td {
+    padding: 10px;
+}
+
+.destiny-content > table {
+    border-collapse: collapse;
+    width: 70%;
+    margin: 10px 45px 0 0;
+}
+.destiny-content > table > tr:first-of-type {
+    border-bottom: 1px solid #ffdfca;
+}
+.destiny-content > table > tr:first-of-type > th > span {
+    border-bottom: 2px solid #fd7a22;
+    margin: 5px;
+}
+.destiny-content > table td {
+    font-weight: 500;
+}
+#bold-span{
+    margin: 0;
+    font-weight: 600;
+}
+#bold-font {
+    font-weight: 600;
+}
+.more-info-result {
+    display: flex;
+    justify-content: flex-start;
+    direction: rtl;
+    font-weight: 500;
 }
 .more_info {
     padding: 10px;
@@ -146,4 +188,58 @@ svg .a {
     float: left;
     margin-left: 70px;
     padding: 20px;
+}
+.button-text:hover {
+    cursor: pointer;
+}
+
+// part two of page
+::ng-deep .mat-progress-spinner svg,
+.mat-progress-spinner {
+    width: 31px !important;
+    height: 29px !important;
+}
+.mat-progress-spinner {
+    display: inline-flex;
+}
+::ng-deep .mat-progress-spinner circle {
+    fill: #8b69331a !important;
+}
+.first_line,
+.second_line,
+.third_line {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    direction: rtl;
+    font-weight: 600;
+}
+
+#first_span {
+    display: inline-flex;
+    padding: 10px;
+    width: 140px;
+    direction: rtl;
+    border-left: 1px solid #8b69332c;
+    & p {
+        margin: 5px;
+    }
+}
+#strong_orange {
+    color: #ff6f2e;
+    font-weight: 600;
+}
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #ff6f2e !important;
+}
+.first_line > p,
+.second_line > p,
+.third_line > p {
+    flex-grow: 1;
+}
+.first_line > p:first-of-type,
+.second_line > p:first-of-type,
+.third_line > p:first-of-type {
+    margin-right: 15px;
 }

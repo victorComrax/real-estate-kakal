@@ -16,8 +16,8 @@
             <button class="button-svg">
                 <svg-icon class="list-icon" src="assets/images/print.svg"></svg-icon>
             </button>
-            <button class="button-text">
-                שמירה
+            <button class="button-text" (click)='editMode ? editMode = false : editMode = true'>
+                {{editMode ? 'שמירה' : 'עריכה'}}
             </button>
         </div>
     </div>
@@ -40,14 +40,14 @@
     </app-working-steps>
 
     <div class="report-content">
-        <span (click)='test()'>דיווח לרשות המיסים <a>שלח מייל</a></span>
+        <span>דיווח לרשות המיסים <a>שלח מייל</a></span>
     </div>
     <app-not-working-tabs></app-not-working-tabs>
     <!-- Forms -->
     <div class="tables">
         <div class="table_2">
             <div id="border_bottom">
-                <p>ארועים חריגים</p>
+                <p id="title">ארועים חריגים</p>
             </div>
             <ng-container *ngFor='let event of exceptionalEvents;let last = last;'>
                 <div class="exceptionalEvents">
@@ -61,35 +61,125 @@
         </div>
         <div class="table_1">
             <div id="border_bottom">
-                <p>זכויות</p>
+                <p id="title">זכויות</p>
             </div>
-            <div class="edit-page">
-                <app-form-container [questions]='form_one_array' [cols]='5'></app-form-container>
-                <app-form-container [questions]='form_two_array' [cols]='4'></app-form-container>
-                <app-form-container [questions]='form_three_array' [cols]='4'></app-form-container>
+            <div class="edit-page" *ngIf='editMode'>
+                <app-form-container (valueChanges)="updateFinalObject($event)" [questions]='form_one_array' [cols]='5'>
+                </app-form-container>
+                <app-form-container (valueChanges)="updateFinalObject($event)" [questions]='form_two_array' [cols]='4'>
+                </app-form-container>
+                <app-form-container (valueChanges)="updateFinalObject($event)" [questions]='form_three_array'
+                    [cols]='4'></app-form-container>
             </div>
+            <!-- part two of page -->
+            <div class="rights" let finalObject='finalObject' *ngIf='!editMode'>
+                <table>
+                    <tr>
+                        <td>מצב רישום חלקה : <span id="bold-font">{{finalObject.smoothRegistrationMode ?
+                                finalObject.smoothRegistrationMode : '?'}}</span></td>
+                        <td>שטח התקשרות קנייה : <span id="bold-font">{{finalObject.purchaseContactArea}} מ"ר</span></td>
+                        <td>בתהליך פירוק שיתוף : <span id="bold-font">{{finalObject.disassemblyProcess}}</span></td>
+                        <td>סוג הנכס : <span id="bold-font">{{finalObject.propertyType ? finalObject.propertyType :
+                                '?'}}</span></td>
+                        <td id='bold-font'>{{finalObject.ownedSpace}} מ"ר</td>
+                        <td>
+                            <span id="first_span">
+                                <mat-progress-spinner color='#FF6F2E' ProgressSpinnerMode='determinate' value='60'>
+                                </mat-progress-spinner>
+                                <p id="strong_orange">60%</p>
+                                <p>בעלות</p>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>שטח התקשרות מכירה : <span id="bold-font">{{finalObject.salesContactArea}} מ"ר</span>
+                        </td>
+                        <td>זכות בנכס : <span id="font-bold">{{finalObject.propertyRight}}</span></td>
+                        <td>בהשכרה עד : {{finalObject.rentUntil | date:'dd/MM/yyyy'}}</td>
+                        <td id='bold-font'>{{finalObject.LeaseInSq}} מ"ר</td>
+                        <td>
+                            <span id="first_span">
+                                <mat-progress-spinner color='#FF6F2E' ProgressSpinnerMode='determinate' value='0'>
+                                </mat-progress-spinner>
+                                <p id="strong_orange">0%</p>
+                                <p>חכירה</p>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>חח"י : <span id="font-bold">{{finalObject.israelElectricCorporation}}</span>
+                        </td>
+                        <td>מקור זכאות : <span id="font-bold">{{finalObject.SourceOfEligibility}}</span></td>
+                        <td>חלקה מקור : <span id="font-bold">{{finalObject.smoothSource}}</span></td>
+                        <td id='bold-font'>{{finalObject.loyaltyInSq}} מ"ר</td>
+                        <td>
+                            <span id="first_span">
+                                <mat-progress-spinner color='#FF6F2E' ProgressSpinnerMode='determinate' value='0'>
+                                </mat-progress-spinner>
+                                <p id="strong_orange">0%</p>
+                                <p>נאמנות</p>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="third_line">
+
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </div>
+            </div>
+            <!-- part two of page -->
         </div>
     </div>
     <!--End of forms -->
+    <!-- Destiny div -->
     <div class="destiny">
-        <span>ייעוד</span>
-        <svg-icon src='assets/images/down-arrow.svg'></svg-icon>
+        <div (click)='destinyIsOpen ? destinyIsOpen = false : destinyIsOpen = true'>
+            <span id="bold-font">ייעוד</span>
+            <svg-icon src='assets/images/down-arrow.svg'></svg-icon>
+        </div>
+        <div class="destiny-content" *ngIf='destinyIsOpen'>
+            <table>
+                <tr>
+                    <th><span>סוג ייעוד</span></th>
+                    <th><span>ייעוד</span></th>
+                    <th><span>שטח</span></th>
+                </tr>
+                <tr *ngFor='let item of destinyArray'>
+                    <td>{{item.typeOfDestiny}}</td>
+                    <td>{{item.destiny}}</td>
+                    <td>{{item.area}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
+    <!--- More info div -->
     <div class="more_info">
         <div (click)='this.moreInfoIsOpen ? this.moreInfoIsOpen = false : this.moreInfoIsOpen = true'>
             <svg-icon src='assets/images/down-arrow.svg'></svg-icon>
-            <span>מידע נוסף</span>
+            <span id="bold-font">מידע נוסף</span>
         </div>
         <div class="more_info_forms" *ngIf='moreInfoIsOpen'>
-            <div class="edit-page">
-                <app-form-container [questions]='form_four_array' [cols]='6'></app-form-container>
+            <div class="edit-page" *ngIf='editMode'>
+                <app-form-container (valueChanges)="updateFinalObject($event)" [questions]='form_four_array' [cols]='6'>
+                </app-form-container>
+            </div>
+            <div class="more-info-result" *ngIf='!editMode'>
+                <span>תאור חלקה : <span id="bold-span">{{finalObject.smoothDescription}}</span></span>
+                <span>קיימת חלוקה : <span id="bold-span">{{finalObject.thereIsDivision}}</span></span>
+                <span>גוש מקור : <span id="bold-span">{{finalObject.sourceBlock}}</span></span>
+                <span>תוכנית פרצלציה : <span id="bold-span">{{finalObject.parcellationProgram}}</span></span>
+                <span>בתהליך משפטי : <span id="bold-span">{{finalObject.inAlegalProcess}}</span></span>
+                <span>הערות נוספות : <span id="bold-span">{{finalObject.additionalComments}}</span></span>
             </div>
         </div>
     </div>
 
     <div class="last_button">
-        <button class="button-text">
-            שמירה
+        <button class="button-text" (click)='editMode ? editMode = false : editMode = true'>
+            {{editMode ? 'שמירה' : 'עריכה'}}
         </button>
     </div>
 

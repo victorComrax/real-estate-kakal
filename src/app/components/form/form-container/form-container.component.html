@@ -35,7 +35,7 @@
 
     </mat-grid-list>
 
-    <div class="form-row" >
+    <div class="form-row" *ngIf="showButton">
       <button type="submit" mat-button (click)="onSubmit()">submit</button>
     </div>
   </form>

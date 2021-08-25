@@ -14,36 +14,45 @@ import { TextboxQuestion } from '../form/logic/question-textbox';
 })
 export class PropertyControlComponent implements OnInit {
   public activeStep: number = 0;
-  public moreInfoIsOpen: Boolean = true;
+  public finalObject: any = {};
+  public moreInfoIsOpen: boolean;
+  public destinyIsOpen:boolean;
+  public editMode:boolean = false;
   public property = { block: '11541', lot: '59', area: '696', date: '17.06.2021', location: 'קריית שמונה,מחוז חיפה' };
-  public exceptionalEvents = [
+  public exceptionalEvents:Array<object>  = [
     { date: '21.4.2020', reason: 'בניה לא חוקית', location: ' יחידה בצפון' },
     { date: '21.4.2020', reason: 'בניה לא חוקית', location: ' יחידה בצפון' }
   ];
 
-  public stepsArray = [
+  public stepsArray:Array<object>  = [
     { svgSrc: 'assets/images/calendar.svg', text: 'פירוט הנכס' },
     { svgSrc: 'assets/images/list.svg', text: 'תנועות' },
     { svgSrc: 'assets/images/Group_1087.svg', text: 'תתי חלקה' },
     { svgSrc: 'assets/images/add.svg', text: 'פרצלציה' }
   ]
 
+  public destinyArray:Array<object> = [
+    {typeOfDestiny:'מסחר,מגורים ותעשיה' , destiny: 'מסחרי ואזרחי' , area: 694.55},
+    {typeOfDestiny:'שטח חקלאי ומרעה' , destiny: 'קרקע חקלאית' , area: 695.55},
+    {typeOfDestiny:'שטח לדרכים' , destiny: 'דרך מוצעת או הרחבה' , area: 1.12}
+  ];
+
   constructor() { }
 
   ngOnInit(): void {
+    // --- reverse arrays for css elements -- >
     this.form_one_array.reverse();
     this.form_two_array.reverse();
     this.form_three_array.reverse();
     this.form_four_array.reverse();
   }
-  public test():void{
-    let lastForm = {...this.form_one_array , ...this.form_two_array , ...this.form_three_array , ...this.form_four_array};
-    console.log(lastForm)
+  public updateFinalObject(event: Event) {
+    this.finalObject = Object.assign(this.finalObject ,event);
   }
   public changeActiveStep(newActiveStep: number): void {
     this.activeStep = newActiveStep;
   }
-  // Forms Arrays ---
+  // -- Forms Arrays ---
   public form_one_array: QuestionBase<string | number>[] = [
     new QuestionNumber({
       key: 'ownedSpace',
@@ -78,12 +87,13 @@ export class PropertyControlComponent implements OnInit {
   ];
   public form_two_array: QuestionBase<string | Date | number>[] = [
     new QuestionNumber({
-      key: 'LeaseInSq.m.',
+      key: 'LeaseInSq',
       label: 'חכירה במ"ר',
       value: 0,
       validations: [Validators.required]
     }),
     new QuestionCalendar({
+      key: 'rentUntil',
       label: 'בהשכרה עד',
       value: new Date(),
       validations: [Validators.required]
@@ -103,7 +113,7 @@ export class PropertyControlComponent implements OnInit {
   ];
   public form_three_array: QuestionBase<string | number>[] = [
     new QuestionNumber({
-      key: 'loyaltyInSq.m.',
+      key: 'loyaltyInSq',
       label: 'נאמנות במ"ר',
       value: 0,
       validations: [Validators.required]
